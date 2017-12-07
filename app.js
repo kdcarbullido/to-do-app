@@ -7,7 +7,7 @@ function onReady() {
     addToDoForm.addEventListener('submit', event => {
         event.preventDefault();
 
-        // get the text
+        // get the text for the to-do title
         let title = newToDoText.value;
 
         // create a new li
@@ -19,11 +19,22 @@ function onReady() {
         // set the input's type to checkbox
         checkbox.type = "checkbox";
 
-        // set the title
+        // set the to-do title
         newLi.textContent = title;
 
         // attach the checkbox to the li
         newLi.appendChild(checkbox);
+
+        let compText = document.createTextNode("Check if completed   ");
+        newLi.appendChild(compText);
+
+        let delbutton = document.createElement("button");
+        let buttonText = document.createTextNode("Delete this To-Do");
+        delbutton.addEventListener('click', function () {
+            delbutton.parentNode.setAttribute('style', 'display:none');
+        });
+        delbutton.appendChild(buttonText);
+        newLi.appendChild(delbutton);
 
         // attach the li to the ul
         toDoList.appendChild(newLi);
@@ -31,11 +42,9 @@ function onReady() {
         // empty the input
         newToDoText.value = '';
 
-    });
+    })
 
-
-
-}
+};
 
 window.onload = function () {
     alert("The window has loaded!");
