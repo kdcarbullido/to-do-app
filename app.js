@@ -1,5 +1,6 @@
 function onReady() {
 
+    let id = 0;
     let toDos = [];
     const addToDoForm = document.getElementById('addToDoForm');
     const newToDoText = document.getElementById('newToDoText');
@@ -12,13 +13,20 @@ function onReady() {
 
         toDos.push({
             title: newToDoText.value,
-            complete: false
+            complete: false,
+            id: id
         });
-
+        id++;
        // newToDoText.value = '';  Should this be here. shows in chkpoint illustration, but not instructed.  This statement also appears in addtoDo.eventlistener function.
 
         renderTheUI();
     }
+
+    function deleteToDo (id) {
+        toDos = toDos.filter(item => item.id !== id);
+    }
+
+
 
     function renderTheUI() {
         const toDoList = document.getElementById('toDoList');
@@ -28,12 +36,23 @@ function onReady() {
             const checkbox = document.createElement('input');
             checkbox.type = "checkbox";
             const title = document.createElement('span');
+            const completeText = document.createTextNode('Check if To-Do is completed . . .  ');
             title.textContent = toDos.title;
+
+            const delBtn = document.createElement('button');
+            const delBtnText = document.createTextNode('Click to Delete this To-Do');
+            delBtn.appendChild(delBtnText);
+
 
             toDoList.appendChild(newLi);
             newLi.appendChild(title);
             newLi.appendChild(checkbox);
-
+            newLi.appendChild(completeText);
+            newLi.appendChild(delBtn);
+            delBtn.addEventListener('click', event => {
+                deleteToDo(toDos.id);
+                renderTheUI();
+            });
         });
     }
 
@@ -41,38 +60,10 @@ function onReady() {
         event.preventDefault();
         createNewToDo();
         newToDoText.value = '';
-    })
+    });
 
     renderTheUI();
 }
-
-    //     // get the text
-    //     let title = newToDoText.value;
-    //
-    //     // create a new li
-    //     let newLi = document.createElement('li');
-    //
-    //     // create a new input
-    //     let checkbox = document.createElement('input');
-    //
-    //     // set the input's type to checkbox
-    //     checkbox.type = "checkbox";
-    //
-    //     // set the title
-    //     newLi.textContent = title;
-    //
-    //     // attach the checkbox to the li
-    //     newLi.appendChild(checkbox);
-    //
-    //     // attach the li to the ul
-    //     toDoList.appendChild(newLi);
-    //
-    //     // empty the input
-    //
-    // });
-
-
-
 
 
 window.onload = function () {
